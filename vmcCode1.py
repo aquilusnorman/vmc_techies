@@ -29,7 +29,6 @@ cur.execute("SELECT item_price FROM item_stock")
 for i in cur:
     prices.append(i)
 
-
 # PINS
 leds = [4, 23, 12, 20] # LEDS
 btns = [17, 25, 13, 21] # BUTTONS
@@ -52,10 +51,14 @@ def acceptCash():
 
 # MAIN FUNCTION
 if  __name__ == "__main__":
+
+    available_items = []
+
     try:
         while True:
             cash = acceptCash()
 
             for i in prices:
                 if cash > i:
-                    
+                    available_items.append(prices.index(i))
+                    GPIO.output(leds[prices.index(i)], GPIO.HIGH)
